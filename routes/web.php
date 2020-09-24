@@ -16,15 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth/login');
 });
-// Route::get('/index', 'HomeController@index');
-// Route::get('/top', 'HomeController@top');
 Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::prefix('user')->group(function(){
-//     Route::get('edit', 'UserController@edit');
-//     Route::post('edit', 'UserController@update');
-// });
+Route::get('/book/like/{id}', 'BookController@like')->name('book.like');
+Route::get('/book/unlike/{id}', 'BookController@unlike')->name('book.unlike');
 Route::resource('users', 'UserController');
 Route::resource('books', 'BookController');
+
+

@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-// use App\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-// use Illuminate\Database\Eloquent\Model;
 
 class UserController extends Controller
 {
     public function index() {
         $user = Auth::user();
-        // $users = User::all();
         $users = User::paginate(8);
         $params = [
             'user' => $user,
@@ -25,14 +22,7 @@ class UserController extends Controller
     public function show($id) {
         $user = User::find($id);
         $user->books = $user->books()->paginate(8);
-        // $books = $user->books();
-        // $params = [
-        //     'user' => $user,
-        //     'books' => $books
-        // ];
-        // return view('user.show', $user);
         return view('user.show', ['user' => $user]);
-        // return view('user.show', $params);
     }
     
     public function edit($id) {

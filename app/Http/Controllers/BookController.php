@@ -5,16 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Book;
 use App\User;
+use App\Like;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
-// use Validator;
-
-// use Illuminate\Support\MessageBag;
-// use Illuminate\View\Middleware\ShareErrorsFromSession;
-
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified'])->only(['like', 'unlike']);
+    }
+
+    public function like($id) {
+        Like::create([
+            'book_id' => $id,
+            'user_id' => Auth::id(),
+        ]);
+        session()->flash('success', 'You Liked the Book');
+        return redirect()->back();
+    }
+
+    public function unlike($id) {
+        $like = Like::where('book_id', $id)->where('user_id', Auth::id())->first();
+        $like->delete();
+        session()->flash('success', 'You Unliked the Book');
+        return redirect()->back();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,15 +38,13 @@ class BookController extends Controller
      */
     public function index()
     {
-        // $books = Book::all();
         $books = Book::paginate(8);
         $user = Auth::user();
         $params = [
             'books' => $books,
             'user' => $user,
         ];
-        // $books = Book::paginate(5);
-        // return view('book.index', ['books' => $books]);
+        // dd($books, $user);
         return view('book.index', $params);
     }
 

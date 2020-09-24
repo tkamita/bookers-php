@@ -12,9 +12,13 @@ class User extends Authenticatable
     use Notifiable;
 
     public function books() {
-        return $this->hasMany('App\book');
+        return $this->hasMany('App\Book');
     }
-    
+
+    public function likes() {
+        return $this->hasMany('App\like');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
