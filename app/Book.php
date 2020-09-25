@@ -19,6 +19,10 @@ class Book extends Model
     public function user() {
         return $this->belongsTo('App\User');
     }
+    
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 
 
     public function is_liked_by_auth_user() {

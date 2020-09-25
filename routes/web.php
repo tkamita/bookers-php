@@ -24,5 +24,5 @@ Route::get('/book/like/{id}', 'BookController@like')->name('book.like');
 Route::get('/book/unlike/{id}', 'BookController@unlike')->name('book.unlike');
 Route::resource('users', 'UserController');
 Route::resource('books', 'BookController');
-
-
+Route::post('/book/comment/{id}', 'CommentController@comment')->name('book.comment');
+Route::delete('book/comment/{id}', 'CommentController@destroy')->name('delete.comment');

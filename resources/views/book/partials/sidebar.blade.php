@@ -26,7 +26,7 @@
   @endif
   <form action="{{ route('books.store') }}" method="post" enctype="multipart/form-data">
     @csrf
-    <input type="hidden" name="user_id" value="{{ $user->id }}">
+    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
     <label for="title">Title</label>
     <div class="input-group mb-3">
       <input type="text" class="form-control" id="title" name="title" aria-describedby="basic-addon3">

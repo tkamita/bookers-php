@@ -51,6 +51,44 @@
           </tr>
         </tbody>
       </table>
+      @foreach($book->comments as $comment)
+        <div class="card mb-3">
+          <div class="card-header">
+            <div class="row no-gutters">
+              <div class="col-md-2 h-25">
+                <img src="{{ asset('storage/profiles/'.$comment->user->profile_image) }}" alt="" class="rounded-circle w-50">
+              </div>
+              <div class="col-md-10">
+                <div class="card-body p-0">
+                  {{ $comment->user->name }}
+                  @if($comment->user_id === auth()->user()->id)
+                    <form action="{{ route('delete.comment', $comment->id) }}" method="POST" enctype="multipart/form-data">
+                      @method('DELETE')
+                      @csrf
+                      <input type="hidden" name="id" value="{{ $comment->id }}">
+                      <input class="btn btn-danger float-right" type="submit" value="delete">
+                    </form>
+                  @endif
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{!! nl2br(e($comment->body)) !!}</p>
+          </div>
+          <div class="card-footer text-muted clearfix">
+            {{ $comment->created_at }}
+          </div>
+        </div>
+      @endforeach
+      <form action="{{ route('book.comment', ['id' => $book->id]) }}" method="post" enctype="multipart/form-data" class="clearfix">
+        @csrf
+        <div class="form-group">
+          <label for="comment">Comment</label>
+          <textarea class="form-control" id="comment" name="body" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary float-right">Submit</button>
+      </form>
     </div>
   </div>
 </div>

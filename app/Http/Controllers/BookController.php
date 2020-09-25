@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Book;
 use App\User;
 use App\Like;
+use App\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
